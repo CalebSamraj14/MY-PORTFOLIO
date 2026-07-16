@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Caleb Samraj D — Software Developer · AI &amp; ML</title>
+<meta name="description" content="Portfolio of Caleb Samraj D — Software Developer building Python & AI-integrated applications." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: { void:'#08090D', panel:'#0C0E14', accent:'#4C7CFF', ink:'#EDEFF5', muted:'#8B92A6' },
+        fontFamily: {
+          display: ['"Fraunces"', 'serif'],
+          body: ['Inter', 'sans-serif'],
+          mono: ['"JetBrains Mono"', 'monospace'],
+        },
+      },
+    },
+  }
+</script>
+
+<link rel="stylesheet" href="style.css">
+
+<script async src="https://unpkg.com/es-module-shims@1.10.0/dist/es-module-shims.js"></script>
+<script type="importmap">
+{ "imports": { "three": "https://unpkg.com/three@0.160.0/build/three.module.js" } }
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+<body class="noise antialiased">
+
+<a href="#main" class="skip-link -translate-y-24 bg-accent text-black px-4 py-2 rounded font-mono text-xs">Skip to content</a>
+
+<!-- ============================= ENTRY GATE ============================= -->
+<div id="gate" class="flex items-center justify-center px-5">
+  <canvas id="gate-canvas" class="absolute inset-0 w-full h-full"></canvas>
+  <div class="aurora"></div>
+
+  <div id="gate-card" class="relative z-10 w-full max-w-md glass-strong rounded-2xl p-8 sm:p-9 shadow-[0_30px_90px_-30px_rgba(76,124,255,.4)]">
+    <div class="eyebrow mb-5">Visitor Access</div>
+    <h1 class="font-display text-[1.55rem] sm:text-[1.75rem] font-medium leading-tight mb-3">
+      Welcome to Caleb Samraj D's Portfolio
+    </h1>
+    <p class="text-muted text-sm leading-relaxed mb-7">
+      A quick introduction helps me understand who's visiting my work, and lets me follow up if it's relevant.
+    </p>
+
+    <form id="gate-form" class="space-y-4" novalidate>
+      <div>
+        <label class="field-label">Full Name *</label>
+        <input required name="name" type="text" placeholder="Jordan Avery" autocomplete="name" />
+      </div>
+      <div>
+        <label class="field-label">Email Address *</label>
+        <input required name="email" type="email" placeholder="you@company.com" autocomplete="email" />
+      </div>
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="field-label">Company <span class="normal-case text-[.63rem]">(optional)</span></label>
+          <input name="company" type="text" placeholder="Acme Corp" autocomplete="organization" />
+        </div>
+        <div>
+          <label class="field-label">Job Title / Role *</label>
+          <input required name="role" type="text" placeholder="Engineering Manager" />
+        </div>
+      </div>
+      <div>
+        <label class="field-label">Purpose of Visit *</label>
+        <select required name="purpose">
+          <option value="">Select one…</option>
+          <option>Recruiter</option>
+          <option>Hiring Manager</option>
+          <option>HR</option>
+          <option>Client</option>
+          <option>Developer</option>
+          <option>Student</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <label class="flex items-start gap-3 pt-1 cursor-pointer select-none">
+        <input required name="consent" type="checkbox" class="mt-1 w-4 h-4 accent-accent flex-none" style="width:16px;padding:0;" />
+        <span class="text-xs text-muted leading-relaxed">I understand my submitted information will be sent to Caleb Samraj D.</span>
+      </label>
+
+      <p id="gate-error" class="hidden text-xs text-red-400 font-mono"></p>
+
+      <button type="submit" id="gate-submit" class="btn-primary w-full justify-center mt-2">
+        <span id="gate-submit-label">Enter Portfolio</span>
+        <svg id="gate-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- ============================= MAIN SITE ============================= -->
+<div id="main" class="relative">
+
+<!-- NAV -->
+<header id="site-nav" class="fixed top-0 inset-x-0 z-40">
+  <nav class="wrap flex items-center justify-between py-5">
+    <a href="#hero" class="font-display font-medium tracking-tight text-lg">Caleb Samraj D</a>
+    <div class="hidden md:flex items-center gap-8 font-mono text-[.7rem] tracking-widest uppercase text-muted">
+      <a href="#about" class="hover:text-ink transition">About</a>
+      <a href="#skills" class="hover:text-ink transition">Skills</a>
+      <a href="#experience" class="hover:text-ink transition">Experience</a>
+      <a href="#projects" class="hover:text-ink transition">Projects</a>
+      <a href="#resume" class="hover:text-ink transition">Resume</a>
+      <a href="#contact" class="hover:text-ink transition">Contact</a>
+    </div>
+    <a href="#contact" class="btn-ghost !py-2 !px-4 !text-xs">Get in touch</a>
+  </nav>
+</header>
+
+<!-- ============================= HERO ============================= -->
+<section id="hero" class="relative min-h-[100svh] flex items-center overflow-hidden">
+  <canvas id="hero-canvas" class="absolute inset-0 w-full h-full"></canvas>
+  <div class="aurora"></div>
+  <div class="absolute inset-0 grid-mask"></div>
+  <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-void"></div>
+
+  <div class="relative z-10 wrap w-full pt-28 pb-16">
+    <div class="eyebrow mb-6 reveal" data-reveal>Software Developer <em>·</em> AI &amp; ML <em>·</em> Chennai, India</div>
+    <h1 class="font-display font-medium leading-[1.02] text-[12vw] sm:text-[5.4rem] md:text-[6rem] tracking-tight reveal" data-reveal>
+      <span class="grad-text">Caleb Samraj D</span>
+    </h1>
+
+    <div class="mt-7 flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-sm sm:text-base text-muted reveal" data-reveal>
+      <span>Building with</span>
+      <span id="typewriter" class="text-ink font-medium"></span>
+      <span class="inline-block w-[2px] h-[1.1em] bg-accent animate-pulse align-middle"></span>
+    </div>
+
+    <p class="mt-6 max-w-xl text-muted leading-relaxed reveal" data-reveal>
+      Final-year Electronics &amp; Communication Engineering student who builds Python and AI-integrated applications, backed by Supabase and shipped with Power Platform automation.
+    </p>
+
+    <div class="mt-10 flex flex-wrap items-center gap-4 reveal" data-reveal>
+      <a href="./Caleb_Samraj_D_ATS_Resume.pdf" download class="btn-primary">
+        Download Resume
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="#projects" class="btn-ghost">View Projects</a>
+      <a href="#contact" class="btn-ghost">Contact Me</a>
+    </div>
+
+    <div class="mt-14 flex items-center gap-4 reveal" data-reveal>
+      <a href="https://github.com/CalebSamraj14" target="_blank" rel="noopener" aria-label="GitHub" class="w-10 h-10 rounded-full glass flex items-center justify-center hover:border-accent/50 hover:text-accent transition">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.73.5.5 5.74.5 12.02c0 5.02 3.26 9.28 7.79 10.79.57.1.78-.25.78-.55 0-.27-.01-1.16-.02-2.11-3.17.69-3.84-1.36-3.84-1.36-.52-1.32-1.27-1.67-1.27-1.67-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.02 1.75 2.68 1.24 3.34.95.1-.74.4-1.24.72-1.53-2.53-.29-5.19-1.27-5.19-5.63 0-1.24.44-2.26 1.17-3.05-.12-.29-.51-1.45.11-3.02 0 0 .96-.31 3.14 1.16.91-.25 1.89-.38 2.86-.38.97 0 1.95.13 2.86.38 2.18-1.47 3.14-1.16 3.14-1.16.62 1.57.23 2.73.11 3.02.73.79 1.17 1.81 1.17 3.05 0 4.37-2.66 5.34-5.2 5.62.41.36.77 1.07.77 2.15 0 1.55-.01 2.8-.01 3.18 0 .3.2.66.79.55A10.53 10.53 0 0 0 23.5 12c0-6.28-5.23-11.52-11.5-11.52Z"/></svg>
+      </a>
+      <a href="https://linkedin.com/in/caleb-samraj-d" target="_blank" rel="noopener" aria-label="LinkedIn" class="w-10 h-10 rounded-full glass flex items-center justify-center hover:border-accent/50 hover:text-accent transition">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13ZM7.12 20.45H3.56V9h3.56v11.45Z"/></svg>
+      </a>
+      <a href="mailto:calebsamraj0@gmail.com" aria-label="Email" class="w-10 h-10 rounded-full glass flex items-center justify-center hover:border-accent/50 hover:text-accent transition">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M3 6.5 12 13l9-6.5M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z" stroke="currentColor" stroke-width="1.6"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-muted z-10">
+    <span class="font-mono text-[.62rem] tracking-widest uppercase">Scroll</span>
+    <div class="w-[1px] h-9 bg-gradient-to-b from-accent to-transparent"></div>
+  </div>
+</section>
+
+<!-- ============================= ABOUT ============================= -->
+<section id="about" class="relative section-pad wrap">
+  <div class="grid lg:grid-cols-[1fr_1.05fr] gap-16 items-center">
+    <div class="reveal" data-reveal>
+      <div class="eyebrow mb-5">About</div>
+      <h2 class="font-display text-3xl sm:text-4xl font-medium leading-tight mb-6">
+        Engineer at the intersection of hardware and intelligence.
+      </h2>
+      <p class="text-muted leading-relaxed mb-4">
+        I'm Caleb Samraj D, a final-year Electronics &amp; Communication Engineering student focused on software development, applied AI, and full-stack systems.
+      </p>
+      <p class="text-muted leading-relaxed mb-8">
+        I build intelligent application features and scalable systems using Python, JavaScript, SQL and Supabase — and automate real business workflows with Microsoft Power Apps and Power Automate. My internship at Larsen &amp; Toubro took that from coursework to production: dashboards, authentication, and AI-assisted features shipped end to end.
+      </p>
+      <div class="flex flex-wrap gap-2.5">
+        <span class="font-mono text-xs px-3 py-1.5 rounded-full glass text-muted">Python</span>
+        <span class="font-mono text-xs px-3 py-1.5 rounded-full glass text-muted">Supabase</span>
+        <span class="font-mono text-xs px-3 py-1.5 rounded-full glass text-muted">Power Platform</span>
+        <span class="font-mono text-xs px-3 py-1.5 rounded-full glass text-muted">AI API Integration</span>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 gap-4 reveal" data-reveal>
+      <div class="card glass p-7">
+        <div class="num-counter text-4xl font-medium" data-count="3">0</div>
+        <div class="font-mono text-[.65rem] tracking-widest uppercase text-muted mt-2">Featured Projects</div>
+      </div>
+      <div class="card glass p-7">
+        <div class="num-counter text-4xl font-medium" data-count="15">0</div>
+        <div class="font-mono text-[.65rem] tracking-widest uppercase text-muted mt-2">Technologies</div>
+      </div>
+      <div class="card glass p-7">
+        <div class="num-counter text-4xl font-medium" data-count="5">0</div>
+        <div class="font-mono text-[.65rem] tracking-widest uppercase text-muted mt-2">Certifications</div>
+      </div>
+      <div class="card glass p-7">
+        <div class="num-counter text-4xl font-medium" data-count="1">0</div>
+        <div class="font-mono text-[.65rem] tracking-widest uppercase text-muted mt-2">Internship — L&amp;T</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= SKILLS ============================= -->
+<section id="skills" class="relative section-pad wrap bg-panel/40">
+  <div class="eyebrow mb-5 reveal" data-reveal>Capabilities</div>
+  <h2 class="font-display text-3xl sm:text-4xl font-medium mb-14 reveal" data-reveal>Skills &amp; Stack</h2>
+  <div id="skills-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+</section>
+
+<!-- ============================= EXPERIENCE TIMELINE ============================= -->
+<section id="experience" class="relative section-pad wrap max-w-4xl">
+  <div class="eyebrow mb-5 reveal" data-reveal>Journey</div>
+  <h2 class="font-display text-3xl sm:text-4xl font-medium mb-14 reveal" data-reveal>Experience Timeline</h2>
+  <div class="relative pl-10">
+    <div class="timeline-line absolute left-[7px] top-1 bottom-1 w-[1.5px] rounded-full"></div>
+    <div id="timeline-items" class="space-y-12"></div>
+  </div>
+</section>
+
+<!-- ============================= PROJECTS ============================= -->
+<section id="projects" class="relative section-pad wrap bg-panel/40">
+  <div class="eyebrow mb-5 reveal" data-reveal>Selected Work</div>
+  <h2 class="font-display text-3xl sm:text-4xl font-medium mb-14 reveal" data-reveal>Featured Projects</h2>
+  <div class="grid md:grid-cols-3 gap-6" id="projects-grid"></div>
+</section>
+
+<!-- ============================= GITHUB ============================= -->
+<section id="github" class="relative section-pad wrap">
+  <div class="eyebrow mb-5 reveal" data-reveal>Open Source</div>
+  <h2 class="font-display text-3xl sm:text-4xl font-medium mb-12 reveal" data-reveal>GitHub Dashboard</h2>
+  <div class="grid lg:grid-cols-2 gap-6 reveal" data-reveal>
+    <div class="card glass-strong p-6 overflow-hidden">
+      <img src="https://github-readme-stats.vercel.app/api?username=CalebSamraj14&show_icons=true&theme=transparent&hide_border=true&title_color=4C7CFF&icon_color=6E93FF&text_color=EDEFF5" alt="GitHub stats for CalebSamraj14" class="w-full h-auto" loading="lazy" onerror="this.parentElement.innerHTML='<p class=&quot;font-mono text-sm text-muted p-6&quot;>Stats render live once deployed with network access.</p>'" />
+    </div>
+    <div class="card glass-strong p-6 overflow-hidden">
+      <img src="https://github-readme-streak-stats.herokuapp.com/?user=CalebSamraj14&theme=transparent&hide_border=true&ring=4C7CFF&fire=4C7CFF&currStreakLabel=4C7CFF" alt="GitHub streak for CalebSamraj14" class="w-full h-auto" loading="lazy" onerror="this.parentElement.innerHTML='<p class=&quot;font-mono text-sm text-muted p-6&quot;>Streak stats render live once deployed.</p>'" />
+    </div>
+    <div class="card glass-strong p-6 overflow-hidden lg:col-span-2">
+      <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=CalebSamraj14&layout=compact&theme=transparent&hide_border=true&title_color=4C7CFF&text_color=EDEFF5" alt="Top languages for CalebSamraj14" class="mx-auto h-auto" loading="lazy" onerror="this.parentElement.innerHTML='<p class=&quot;font-mono text-sm text-muted p-6&quot;>Languages render live once deployed.</p>'" />
+    </div>
+  </div>
+</section>
+
+<!-- ============================= RESUME ============================= -->
+<section id="resume" class="relative section-pad wrap bg-panel/40 max-w-5xl">
+  <div class="eyebrow mb-5 reveal" data-reveal>Credentials</div>
+  <h2 class="font-display text-3xl sm:text-4xl font-medium mb-12 reveal" data-reveal>Resume</h2>
+
+  <div class="grid md:grid-cols-2 gap-6">
+    <div class="card glass p-7 reveal" data-reveal>
+      <h3 class="font-display text-lg font-medium mb-4">Education</h3>
+      <p class="font-medium">B.E. — Electronics &amp; Communication Engineering</p>
+      <p class="text-muted text-sm font-mono mt-1">Expected Graduation: 2026</p>
+    </div>
+    <div class="card glass p-7 reveal" data-reveal>
+      <h3 class="font-display text-lg font-medium mb-4">Internship</h3>
+      <p class="font-medium">Software Developer Intern — Larsen &amp; Toubro (L&amp;T)</p>
+      <p class="text-muted text-sm font-mono mt-1">2025</p>
+    </div>
+    <div class="card glass p-7 md:col-span-2 reveal" data-reveal>
+      <h3 class="font-display text-lg font-medium mb-4">Certifications</h3>
+      <ul class="grid sm:grid-cols-2 gap-3 text-sm text-muted">
+        <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-accent"></span>NPTEL — Internet of Things (IoT)</li>
+        <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-accent"></span>NPTEL — Cloud Computing</li>
+        <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-accent/60"></span>In Progress — Microsoft Azure Fundamentals (AZ-900)</li>
+        <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-accent/60"></span>In Progress — Power Platform Fundamentals (PL-900)</li>
+        <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-accent/60"></span>In Progress — ITIL Foundation</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="mt-10 flex justify-center reveal" data-reveal>
+    <a href="./Caleb_Samraj_D_ATS_Resume.pdf" download class="btn-primary">
+      Download Full Resume (PDF)
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- ============================= CONTACT ============================= -->
+<section id="contact" class="relative section-pad wrap">
+  <div class="max-w-2xl mx-auto text-center mb-14 reveal" data-reveal>
+    <div class="eyebrow justify-center mb-5">Get In Touch</div>
+    <h2 class="font-display text-3xl sm:text-4xl font-medium mb-5">Let's build something intelligent.</h2>
+    <p class="text-muted">Open to Software Developer, AI/ML, and Automation roles &amp; collaborations.</p>
+  </div>
+
+  <div class="max-w-2xl mx-auto card glass-strong p-8 sm:p-9 reveal" data-reveal>
+    <form id="contact-form" class="space-y-4" novalidate>
+      <div class="grid sm:grid-cols-2 gap-4">
+        <div>
+          <label class="field-label">Name *</label>
+          <input required name="name" type="text" placeholder="Your name" />
+        </div>
+        <div>
+          <label class="field-label">Email *</label>
+          <input required name="email" type="email" placeholder="you@company.com" />
+        </div>
+      </div>
+      <div>
+        <label class="field-label">Subject *</label>
+        <input required name="subject" type="text" placeholder="Let's talk about…" />
+      </div>
+      <div>
+        <label class="field-label">Message *</label>
+        <textarea required name="message" rows="5" placeholder="Tell me a bit about the opportunity or project…"></textarea>
+      </div>
+      <button type="submit" class="btn-primary w-full justify-center">
+        <span id="contact-submit-label">Send Message</span>
+      </button>
+      <p id="contact-status" class="text-center font-mono text-xs text-muted"></p>
+    </form>
+
+    <div class="mt-9 pt-8 border-t border-white/10 grid sm:grid-cols-3 gap-5 text-center">
+      <a href="https://github.com/CalebSamraj14" target="_blank" rel="noopener" class="text-sm text-muted hover:text-ink transition">GitHub</a>
+      <a href="https://linkedin.com/in/caleb-samraj-d" target="_blank" rel="noopener" class="text-sm text-muted hover:text-ink transition">LinkedIn</a>
+      <a href="mailto:calebsamraj0@gmail.com" class="text-sm text-muted hover:text-ink transition">Email</a>
+    </div>
+    <p class="text-center font-mono text-[.68rem] text-muted mt-6">Tamil Nadu, India</p>
+  </div>
+</section>
+
+<!-- ============================= FOOTER ============================= -->
+<footer class="relative border-t border-white/10 wrap py-10">
+  <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+    <p class="font-mono text-xs text-muted">Designed &amp; Developed by <span class="text-ink">Caleb Samraj D</span></p>
+    <button id="back-to-top" aria-label="Back to top" class="w-10 h-10 rounded-full glass flex items-center justify-center hover:text-ink hover:border-accent/50 transition">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+</footer>
+
+</div><!-- /#main -->
+
+<script src="script.js"></script>
+</body>
+</html>
